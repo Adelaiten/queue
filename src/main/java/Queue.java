@@ -25,8 +25,8 @@ public class Queue {
     }
 
 
-    public String peak() {
-        return firstNode.getValue();
+    public String peek() {
+        return this.firstNode.getValue();
     }
 
 
@@ -44,6 +44,6 @@ public class Queue {
 
 
     public boolean isEmpty() {
-        return true;
+        return this.queueSize > 0;
     }
 }
