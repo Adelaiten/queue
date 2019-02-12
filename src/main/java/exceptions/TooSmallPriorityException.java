@@ -1,5 +1,7 @@
+package exceptions;
+
 public class TooSmallPriorityException extends Exception {
-    TooSmallPriorityException(String exceptionMessage) {
+    public TooSmallPriorityException(String exceptionMessage) {
         super(exceptionMessage);
     }
 }

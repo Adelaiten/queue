@@ -1,5 +1,7 @@
+package exceptions;
+
 public class EmptyQueueException extends Exception {
-    EmptyQueueException(String exceptionMessage) {
+    public EmptyQueueException(String exceptionMessage) {
         super(exceptionMessage);
     }
 }

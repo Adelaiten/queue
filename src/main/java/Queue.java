@@ -1,3 +1,6 @@
+import exceptions.EmptyQueueException;
+import exceptions.TooSmallPriorityException;
+
 class Queue {
     private Node firstNode;
     private Node lastNode;
@@ -32,7 +35,7 @@ class Queue {
 
 
 
-    void enqueue(String value, int priority) throws TooSmallPriorityException{
+    void enqueue(String value, int priority) throws TooSmallPriorityException {
 
         throwExceptionWhenValueNull(value);
 
@@ -51,7 +54,7 @@ class Queue {
     }
 
 
-    String peek() throws EmptyQueueException{
+    String peek() throws EmptyQueueException {
         throwExceptionWhenQueueEmpty();
         return this.firstNode.getValue();
     }
@@ -146,7 +149,7 @@ class Queue {
             throw new EmptyQueueException("Empty queue");
         }
     }
-    
+
 
     private void decreasePriorityCounter(int FIRST_NODE_PRIORITY) {
 
