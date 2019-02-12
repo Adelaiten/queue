@@ -6,7 +6,7 @@ public class Queue {
     private int highestPriority;
 
 
-    public Queue() {
+    Queue() {
         this.firstNode = null;
         this.lastNode = null;
         this.queueSize = 0;
@@ -15,7 +15,7 @@ public class Queue {
     }
 
 
-    public void enqueue(String value) {
+    void enqueue(String value) {
         if(queueSize == 0) {
             setFirstNode(value);
         }else {
@@ -26,7 +26,7 @@ public class Queue {
     }
 
 
-    public void enqueue(String value, int priority) {
+    void enqueue(String value, int priority) {
 
         if(priority > highestPriority) {
             setNodeWhenHighestPriority(value, priority);
@@ -44,26 +44,20 @@ public class Queue {
 
 
 
-    public String peek() {
+    String peek() {
         return this.firstNode.getValue();
     }
 
 
-    public String dequeue() {
+    String dequeue() {
         String value = this.firstNode.getValue();
         int FIRST_NODE_PRIORITY = firstNode.getPriority();
         int SECOND_NODE_PRIORITY = firstNode.getNextNode().getPriority();
 
-        if(FIRST_NODE_PRIORITY > SECOND_NODE_PRIORITY) {
-            this.highestPriority = firstNode.getNextNode().getPriority();
-        }
+        setNewHighestPriority(FIRST_NODE_PRIORITY, SECOND_NODE_PRIORITY);
+        decreasePriorityCounter(FIRST_NODE_PRIORITY);
 
-        if(FIRST_NODE_PRIORITY > 1) {
-            priorityCounter--;
-        }
-
-        Node node = this.firstNode.getNextNode();
-        this.firstNode = node;
+        this.firstNode = this.firstNode.getNextNode();
 
         return value;
     }
@@ -104,6 +98,7 @@ public class Queue {
         this.lastNode = this.firstNode;
     }
 
+
     private void setNodeWithPriority(String value, int priority) {
         Node node = firstNode;
         for(int i = 0; i < priorityCounter-1; i++) {
@@ -117,4 +112,18 @@ public class Queue {
             node = node.getNextNode();
         }
     }
+
+
+    private void decreasePriorityCounter(int FIRST_NODE_PRIORITY) {
+        if(FIRST_NODE_PRIORITY > 1) {
+            priorityCounter--;
+        }
+    }
+
+    private void setNewHighestPriority(int FIRST_NODE_PRIORITY, int SECOND_NODE_PRIORITY) {
+        if(FIRST_NODE_PRIORITY > SECOND_NODE_PRIORITY) {
+            this.highestPriority = firstNode.getNextNode().getPriority();
+        }
+    }
+
 }
