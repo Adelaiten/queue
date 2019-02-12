@@ -1,9 +1,11 @@
-public class Queue {
+class Queue {
     private Node firstNode;
     private Node lastNode;
     private int queueSize;
     private int priorityCounter;
     private int highestPriority;
+    private int SMALLEST_PRIORITY = 1;
+    private int EMPTY_QUEUE;
 
 
     Queue() {
@@ -12,11 +14,14 @@ public class Queue {
         this.queueSize = 0;
         this.priorityCounter = 0;
         this.highestPriority = 1;
+        this.EMPTY_QUEUE = 0;
     }
 
 
     void enqueue(String value) {
-        if(queueSize == 0) {
+        throwExceptionWhenValueNull(value);
+
+        if(queueSize == EMPTY_QUEUE) {
             setFirstNode(value);
         }else {
             setNode(value);
@@ -26,13 +31,16 @@ public class Queue {
     }
 
 
-    void enqueue(String value, int priority) {
 
-        if(priority > highestPriority) {
-            setNodeWhenHighestPriority(value, priority);
-        }
+    void enqueue(String value, int priority) throws TooSmallPriorityException{
 
-        if(queueSize == 0) {
+        throwExceptionWhenValueNull(value);
+
+        throwExceptionWhenPriorityTooLow(priority);
+
+        setFirstNodeWhenHighestPriority(value, priority);
+
+        if(queueSize == EMPTY_QUEUE) {
             setFirstNodeWithPriority(value, priority);
         }else {
             setNodeWithPriority(value, priority);
@@ -43,13 +51,15 @@ public class Queue {
     }
 
 
-
-    String peek() {
+    String peek() throws EmptyQueueException{
+        throwExceptionWhenQueueEmpty();
         return this.firstNode.getValue();
     }
 
 
-    String dequeue() {
+    String dequeue() throws EmptyQueueException{
+        throwExceptionWhenQueueEmpty();
+
         String value = this.firstNode.getValue();
         int FIRST_NODE_PRIORITY = firstNode.getPriority();
         int SECOND_NODE_PRIORITY = firstNode.getNextNode().getPriority();
@@ -58,18 +68,19 @@ public class Queue {
         decreasePriorityCounter(FIRST_NODE_PRIORITY);
 
         this.firstNode = this.firstNode.getNextNode();
-
+        queueSize--;
         return value;
     }
 
 
-    public int getQueueSize() {
+
+    int getQueueSize() {
         return this.queueSize;
     }
 
 
-    public boolean isEmpty() {
-        return this.queueSize > 0;
+    boolean isEmpty() {
+        return this.queueSize > EMPTY_QUEUE;
     }
 
 
@@ -85,11 +96,27 @@ public class Queue {
     }
 
 
-    private void setNodeWhenHighestPriority(String value, int priority) {
-        this.highestPriority = priority;
-        Node tempNode = firstNode;
-        firstNode = new Node(value, priority);
-        firstNode.setNextNode(tempNode);
+    private void throwExceptionWhenValueNull(String value) {
+        if (value == null) {
+            throw new NullPointerException();
+        }
+    }
+
+
+    private void throwExceptionWhenPriorityTooLow(int priority) throws TooSmallPriorityException {
+        if(priority < SMALLEST_PRIORITY) {
+            throw new TooSmallPriorityException("Too small priority!");
+        }
+    }
+
+
+    private void setFirstNodeWhenHighestPriority(String value, int priority) {
+        if(priority > highestPriority) {
+            this.highestPriority = priority;
+            Node tempNode = firstNode;
+            firstNode = new Node(value, priority);
+            firstNode.setNextNode(tempNode);
+        }
     }
 
 
@@ -114,8 +141,16 @@ public class Queue {
     }
 
 
+    private void throwExceptionWhenQueueEmpty() throws EmptyQueueException {
+        if(queueSize == EMPTY_QUEUE) {
+            throw new EmptyQueueException("Empty queue");
+        }
+    }
+    
+
     private void decreasePriorityCounter(int FIRST_NODE_PRIORITY) {
-        if(FIRST_NODE_PRIORITY > 1) {
+
+        if(FIRST_NODE_PRIORITY > SMALLEST_PRIORITY) {
             priorityCounter--;
         }
     }
