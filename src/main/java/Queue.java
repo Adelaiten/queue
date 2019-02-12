@@ -17,21 +17,24 @@ public class Queue {
             this.lastNode = this.firstNode;
         }else {
             Node tempNode = new Node(value);
-            lastNode.setNextNode(tempNode);
-            lastNode = tempNode;
+            this.lastNode.setNextNode(tempNode);
+            this.lastNode = tempNode;
         }
         queueSize++;
 
     }
 
 
-    public String peek() {
-        return null;
+    public String peak() {
+        return firstNode.getValue();
     }
 
 
     public String dequeue() {
-        return null;
+        String value = this.firstNode.getValue();
+        Node node = this.firstNode.getNextNode();
+        this.firstNode = node;
+        return value;
     }
 
 
