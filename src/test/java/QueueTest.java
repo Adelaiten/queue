@@ -86,4 +86,12 @@ public class QueueTest {
         Queue queue = new Queue();
         assertEquals(0, queue.getQueueSize());
     }
+
+    @Test
+    public void testIfGetQueueSizeReturnsGoodSize() {
+        Queue queue = new Queue();
+        queue.enqueue("test");
+        queue.enqueue("test");
+        assertEquals(2, queue.getQueueSize());
+    }
 }
