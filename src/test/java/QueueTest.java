@@ -68,4 +68,11 @@ public class QueueTest {
     }
 
 
+    @Test
+    public void testIfEmptyCheckReturnsTrueWhenEmpty() {
+        Queue queue = new Queue();
+        assertTrue(queue.isEmpty());
+    }
+
+
 }
