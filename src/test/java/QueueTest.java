@@ -80,4 +80,10 @@ public class QueueTest {
         queue.enqueue("test");
         assertFalse(queue.isEmpty());
     }
+
+    @Test
+    public void testIfGetQueueSizeReturnsZeroWhenEmpty() {
+        Queue queue = new Queue();
+        assertEquals(0, queue.getQueueSize());
+    }
 }
