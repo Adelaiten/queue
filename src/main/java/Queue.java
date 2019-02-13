@@ -7,7 +7,7 @@ class Queue {
     private int queueSize;
     private int priorityCounter;
     private int highestPriority;
-    private int SMALLEST_PRIORITY = 1;
+    private int SMALLEST_PRIORITY;
     private int EMPTY_QUEUE;
 
 
@@ -17,6 +17,7 @@ class Queue {
         this.queueSize = 0;
         this.priorityCounter = 0;
         this.highestPriority = 1;
+        this.SMALLEST_PRIORITY = 1;
         this.EMPTY_QUEUE = 0;
     }
 
@@ -65,12 +66,18 @@ class Queue {
 
         String value = this.firstNode.getValue();
         int FIRST_NODE_PRIORITY = firstNode.getPriority();
-        int SECOND_NODE_PRIORITY = firstNode.getNextNode().getPriority();
+        if(queueSize > 1) {
+            int SECOND_NODE_PRIORITY = firstNode.getNextNode().getPriority();
+            setNewHighestPriority(FIRST_NODE_PRIORITY, SECOND_NODE_PRIORITY);
+        }
 
-        setNewHighestPriority(FIRST_NODE_PRIORITY, SECOND_NODE_PRIORITY);
         decreasePriorityCounter(FIRST_NODE_PRIORITY);
+        if(queueSize == 1) {
+            this.firstNode = null;
+        }else {
+            this.firstNode = this.firstNode.getNextNode();
+        }
 
-        this.firstNode = this.firstNode.getNextNode();
         queueSize--;
         return value;
     }
@@ -83,7 +90,7 @@ class Queue {
 
 
     boolean isEmpty() {
-        return this.queueSize > EMPTY_QUEUE;
+        return !(this.queueSize > this.EMPTY_QUEUE);
     }
 
 
