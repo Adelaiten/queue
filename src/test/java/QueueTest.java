@@ -61,6 +61,11 @@ public class QueueTest {
         assertThrows(NullPointerException.class, () -> queue.enqueue(null));
     }
 
+    @Test
+    public void testIfEnqueueWithPriorityThrowsNullException() {
+        Queue queue = new Queue();
+        assertThrows(NullPointerException.class, () -> queue.enqueue(null, 10));
+    }
 
 
 }
