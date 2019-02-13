@@ -55,5 +55,12 @@ public class QueueTest {
         );
     }
 
+    @Test
+    public void testIfEnqueueThrowsNullException() {
+        Queue queue = new Queue();
+        assertThrows(NullPointerException.class, () -> queue.enqueue(null));
+    }
+
+
 
 }
